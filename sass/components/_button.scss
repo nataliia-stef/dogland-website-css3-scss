@@ -1,0 +1,101 @@
+//it is a component because it can be reusable on other pages 
+
+.btn {
+    &, //will translate to just button, so all this styles will apply to button as well
+    &:link,
+    &:visited {
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.5rem 4rem;
+        display: inline-block; /*if it's inline it is treated as text so it can be easily centered in parent textbox*/
+        border-radius: 0.5rem;
+        transition: all .2s;
+        position: relative;
+        font-size: $default-font-size;
+
+
+        //change for the <button> element
+        border: none;
+        cursor: pointer;
+    }
+    
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 1rem 2rem rgba($color-black,.2);
+        
+        &::after { /* when we hover the button we want some styles applied to ::after */
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0; /*so it will disappears after scaling */
+        }
+    }
+    
+    //active is for button when we hit the button
+    &:active,
+    &:focus { /*when we clicked the element it is an active state */
+        outline: none;
+        transform: translateY(-1px); /* in relation with initial btn state NOT WITH THE HOVE */
+        box-shadow: 0 .5rem 1rem rgba($color-black,.2);
+    }
+    
+    &::after {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 0.5rem;  
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all .4s;
+    }
+
+    &--white {
+        background-color: $color-white;
+        color: $color-grey-dark;
+        
+        &::after {
+            background-color: $color-white;
+        }
+    }
+
+    &--orange {
+        background-color: $color-primary;
+        color: $color-white;
+        
+        &::after {
+            background-color: $color-white;
+        }
+    }
+    
+    &--animated {
+        animation: moveInBottom .5s ease-out;
+        animation-delay: .75s;
+        animation-fill-mode: backwards;
+    }
+}
+
+.btn-text {
+    &:link,
+    &:visited {
+        font-size: $default-font-size;
+        color: $color-primary;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid $color-primary;
+        padding: 3px;
+        transition: all .2s;
+    }
+
+    &:hover {
+        background-color: $color-primary;
+        color: $color-white;
+        box-shadow: 0 1rem 2rem rgba($color-black, .15);
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        box-shadow: 0 .5rem 1rem rgba($color-black, .15);
+        transform: translateY(0);
+    }
+}

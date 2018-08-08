@@ -1,0 +1,84 @@
+.story {
+    width: 75%;
+    margin: 0 auto; /*to center block level element inside block level element */
+    box-shadow: 0 3rem 6rem rgba($color-black, .1);
+    background-color: rgba($color-white,.5);
+    border-radius: 3px;
+    padding: 6rem;
+    padding-left: 9rem;
+    font-size: $default-font-size;
+    /*don't forget to skew children in opposite direction */
+    transform: skewX(-12deg);
+
+    @include respond(tab-port){
+        width: 100%;
+        padding: 4rem;
+        padding-left: 7rem;
+    }
+
+    @include respond(phone){
+        transform: skewX(0);
+    }
+
+    &__shape {
+        width: 15rem;
+        height: 15rem;
+        float: left;
+        /*shape-outside makes the content float around the element */
+        /*radius will be half of width - so diametr will be 15rem */
+        -webkit-shape-outside: circle(50% at 50% 50%);
+        shape-outside: circle(50% at 50% 50%);
+
+        -webkit-clip-path: circle(50% at 50% 50%);
+        clip-path: circle(50% at 50% 50%);
+
+        /*instead of messing up with paddings use transform translate to create space between text and image */
+        transform: translateX(-3rem) skewX(12deg);
+        position: relative;
+
+        @include respond(phone){
+            transform: translateX(-3rem) skewX(0);
+        }
+    }
+
+    &__img {
+        /*image inside the shape those width is 15rem */
+        height: 100%;
+        transform: translateX(-4rem) scale(1.4);
+        backface-visibility: hidden; /*when smth strange happens while using animations or transform - add this property and it 99% will fix it */
+        transition: all 0.6s;
+    }
+
+    &__text {
+        transform: skewX(12deg);
+
+        @include respond(phone){
+            transform: skewX(0);
+        }
+    }
+
+    &__caption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 20%);
+        color: $color-white;
+        text-transform: uppercase;
+        font-size: 1.7rem;
+        text-align: center;
+        opacity: 0;
+        transition: all 0.6s;
+        backface-visibility: hidden; /*to prevent text from shaking at the end */
+    }
+
+    &:hover &__caption {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    &:hover &__img {
+        //repear all transform of hover even that you don't want to change (new tranform will override everything!)
+        transform: translateX(-4rem) scale(1);
+        filter: blur(3px) brightness(80%);
+    }
+}
